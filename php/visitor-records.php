@@ -1,8 +1,8 @@
 <?php
 /**
- * Front Office System - Visitor Records
+ * Front Office System - Catatan Pengunjung
  * 
- * Displays all registered visitors in a table
+ * Menampilkan semua pengunjung terdaftar dalam tabel
  */
 
 // Start the session
@@ -17,11 +17,11 @@ $visitors = $visitor->getAll();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visitor Records - Front Office System</title>
+    <title>Catatan Pengunjung - Sistem Front Office</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -33,26 +33,26 @@ $visitors = $visitor->getAll();
     
     <div class="sidebar">
         <div class="sidebar-header">
-            <h1>Front Office System</h1>
+            <h1>Sistem Front Office</h1>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="../index.php">Home</a></li>
+            <li><a href="../index.php"><i class="fas fa-home"></i> Beranda</a></li>
             
-            <li class="menu-category expanded">Visitor Management <i class="fas fa-chevron-down"></i></li>
+            <li class="menu-category expanded">Manajemen Pengunjung <i class="fas fa-chevron-down"></i></li>
             <ul class="submenu expanded">
-                <li><a href="visitor-registration.php">Visitor Registration</a></li>
-                <li><a href="visitor-records.php" class="active">Visitor Records</a></li>
+                <li><a href="visitor-registration.php"><i class="fas fa-user-plus"></i> Pendaftaran Pengunjung</a></li>
+                <li><a href="visitor-records.php" class="active"><i class="fas fa-clipboard-list"></i> Catatan Pengunjung</a></li>
             </ul>
             
-            <li class="menu-category">Administration <i class="fas fa-chevron-down"></i></li>
+            <li class="menu-category">Administrasi <i class="fas fa-chevron-down"></i></li>
             <ul class="submenu">
-                <li><a href="employee-management.php">Employee Management</a></li>
+                <li><a href="employee-management.php"><i class="fas fa-users"></i> Manajemen Karyawan</a></li>
             </ul>
             
-            <li class="menu-category">Future Modules <i class="fas fa-chevron-down"></i></li>
+            <li class="menu-category">Modul Mendatang <i class="fas fa-chevron-down"></i></li>
             <ul class="submenu">
-                <li><a href="#" class="disabled">Item Entry/Exit</a></li>
-                <li><a href="#" class="disabled">Guest Book</a></li>
+                <li><a href="#" class="disabled"><i class="fas fa-box"></i> Masuk/Keluar Barang</a></li>
+                <li><a href="#" class="disabled"><i class="fas fa-book"></i> Buku Tamu</a></li>
             </ul>
         </ul>
     </div>
@@ -60,19 +60,19 @@ $visitors = $visitor->getAll();
     <div class="main-container">
         <div class="container">
             <main>
-                <h2>Visitor Records</h2>
+                <h2>Catatan Pengunjung</h2>
                 
                 <?php if (empty($visitors)): ?>
-                    <p class="info-message">No visitor records found.</p>
+                    <p class="info-message">Tidak ada catatan pengunjung ditemukan.</p>
                 <?php else: ?>
                     <div class="search-filter">
-                        <input type="text" id="visitorSearch" placeholder="Search visitors..." class="search-input">
+                        <input type="text" id="visitorSearch" placeholder="Cari pengunjung..." class="search-input">
                         <!-- Future expansion: Add date range filters and more advanced search options -->
                         <!-- 
                         <div class="filter-options">
-                            <label for="dateFrom">From:</label>
+                            <label for="dateFrom">Dari:</label>
                             <input type="date" id="dateFrom">
-                            <label for="dateTo">To:</label>
+                            <label for="dateTo">Sampai:</label>
                             <input type="date" id="dateTo">
                             <button class="button button-small">Filter</button>
                         </div>
@@ -84,13 +84,13 @@ $visitors = $visitor->getAll();
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Full Name</th>
-                                    <th>ID Card Number</th>
-                                    <th>Phone Number</th>
+                                    <th>Nama Lengkap</th>
+                                    <th>Nomor Kartu Identitas</th>
+                                    <th>Nomor Telepon</th>
                                     <th>Email</th>
-                                    <th>Employee to Visit</th>
-                                    <th>Purpose</th>
-                                    <th>Visit Time</th>
+                                    <th>Karyawan yang Dikunjungi</th>
+                                    <th>Tujuan</th>
+                                    <th>Waktu Kunjungan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -103,7 +103,7 @@ $visitors = $visitor->getAll();
                                     <td><?php echo htmlspecialchars($visitor['email'] ?? 'N/A'); ?></td>
                                     <td><?php echo htmlspecialchars($visitor['employee_name']); ?></td>
                                     <td><?php echo htmlspecialchars($visitor['visit_purpose']); ?></td>
-                                    <td><?php echo date('M d, Y H:i', strtotime($visitor['visit_timestamp'])); ?></td>
+                                    <td><?php echo date('d M Y H:i', strtotime($visitor['visit_timestamp'])); ?></td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -113,25 +113,25 @@ $visitors = $visitor->getAll();
                     <!-- Future expansion: Add pagination controls here -->
                     <!--
                     <div class="pagination">
-                        <button class="pagination-btn">Previous</button>
-                        <span class="pagination-info">Page 1 of 5</span>
-                        <button class="pagination-btn">Next</button>
+                        <button class="pagination-btn">Sebelumnya</button>
+                        <span class="pagination-info">Halaman 1 dari 5</span>
+                        <button class="pagination-btn">Berikutnya</button>
                     </div>
                     -->
                 <?php endif; ?>
                 
                 <div class="actions">
-                    <a href="visitor-registration.php" class="button">Register New Visitor</a>
+                    <a href="visitor-registration.php" class="button">Daftarkan Pengunjung Baru</a>
                     <!-- Future expansion: Add export/print buttons here -->
                     <!--
-                    <button class="button button-secondary">Export to CSV</button>
-                    <button class="button button-secondary">Print Records</button>
+                    <button class="button button-secondary">Ekspor ke CSV</button>
+                    <button class="button button-secondary">Cetak Catatan</button>
                     -->
                 </div>
             </main>
             
             <footer>
-                <p>&copy; <?php echo date('Y'); ?> Front Office System | Educational Project</p>
+                <p>&copy; <?php echo date('Y'); ?> Sistem Front Office | Versi 1.0</p>
             </footer>
         </div>
     </div>

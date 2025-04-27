@@ -27,23 +27,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const sidebarToggle = document.querySelector('.sidebar-toggle');
     if (sidebarToggle) {
         sidebarToggle.addEventListener('click', function () {
-            const sidebar = document.querySelector('.sidebar');
-            if (sidebar) {
-                sidebar.classList.toggle('active');
-                document.body.classList.toggle('sidebar-open');
-            }
+            // Toggle the sidebar-collapsed class on the body instead of active on the sidebar
+            document.body.classList.toggle('sidebar-collapsed');
         });
 
-        // Close sidebar when clicking outside
+        // Close sidebar when clicking outside (modified to work with sidebar-collapsed)
         document.addEventListener('click', function (e) {
             const sidebar = document.querySelector('.sidebar');
             const sidebarToggle = document.querySelector('.sidebar-toggle');
 
-            if (sidebar && sidebar.classList.contains('active') &&
+            if (!document.body.classList.contains('sidebar-collapsed') &&
+                sidebar &&
                 !sidebar.contains(e.target) &&
-                e.target !== sidebarToggle) {
-                sidebar.classList.remove('active');
-                document.body.classList.remove('sidebar-open');
+                e.target !== sidebarToggle &&
+                !sidebarToggle.contains(e.target)) {
+                document.body.classList.add('sidebar-collapsed');
             }
         });
     }

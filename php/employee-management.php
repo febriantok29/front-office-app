@@ -1,8 +1,8 @@
 <?php
 /**
- * Front Office System - Employee Management
+ * Front Office System - Manajemen Karyawan
  * 
- * Lists all employees and provides management options
+ * Menampilkan semua karyawan dan menyediakan opsi pengelolaan
  */
 
 // Start the session
@@ -25,11 +25,11 @@ unset($_SESSION['error_message']);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Management - Front Office System</title>
+    <title>Manajemen Karyawan - Sistem Front Office</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -41,26 +41,26 @@ unset($_SESSION['error_message']);
     
     <div class="sidebar">
         <div class="sidebar-header">
-            <h1>Front Office System</h1>
+            <h1>Sistem Front Office</h1>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="../index.php">Home</a></li>
+            <li><a href="../index.php"><i class="fas fa-home"></i> Beranda</a></li>
             
-            <li class="menu-category">Visitor Management <i class="fas fa-chevron-down"></i></li>
+            <li class="menu-category">Manajemen Pengunjung <i class="fas fa-chevron-down"></i></li>
             <ul class="submenu">
-                <li><a href="visitor-registration.php">Visitor Registration</a></li>
-                <li><a href="visitor-records.php">Visitor Records</a></li>
+                <li><a href="visitor-registration.php"><i class="fas fa-user-plus"></i> Pendaftaran Pengunjung</a></li>
+                <li><a href="visitor-records.php"><i class="fas fa-clipboard-list"></i> Catatan Pengunjung</a></li>
             </ul>
             
-            <li class="menu-category expanded">Administration <i class="fas fa-chevron-down"></i></li>
+            <li class="menu-category expanded">Administrasi <i class="fas fa-chevron-down"></i></li>
             <ul class="submenu expanded">
-                <li><a href="employee-management.php" class="active">Employee Management</a></li>
+                <li><a href="employee-management.php" class="active"><i class="fas fa-users"></i> Manajemen Karyawan</a></li>
             </ul>
             
-            <li class="menu-category">Future Modules <i class="fas fa-chevron-down"></i></li>
+            <li class="menu-category">Modul Mendatang <i class="fas fa-chevron-down"></i></li>
             <ul class="submenu">
-                <li><a href="#" class="disabled">Item Entry/Exit</a></li>
-                <li><a href="#" class="disabled">Guest Book</a></li>
+                <li><a href="#" class="disabled"><i class="fas fa-box"></i> Masuk/Keluar Barang</a></li>
+                <li><a href="#" class="disabled"><i class="fas fa-book"></i> Buku Tamu</a></li>
             </ul>
         </ul>
     </div>
@@ -68,7 +68,7 @@ unset($_SESSION['error_message']);
     <div class="main-container">
         <div class="container">
             <main>
-                <h2>Employee Management</h2>
+                <h2>Manajemen Karyawan</h2>
                 
                 <!-- Display success message if any -->
                 <?php if (!empty($successMessage)): ?>
@@ -85,26 +85,26 @@ unset($_SESSION['error_message']);
                 <?php endif; ?>
                 
                 <div class="actions top-actions">
-                    <a href="employee-add.php" class="button">Add New Employee</a>
+                    <a href="employee-add.php" class="button">Tambah Karyawan Baru</a>
                 </div>
                 
                 <div class="search-filter">
-                    <input type="text" id="employeeSearch" placeholder="Search employees..." class="search-input">
+                    <input type="text" id="employeeSearch" placeholder="Cari karyawan..." class="search-input">
                 </div>
                 
                 <?php if (empty($employees)): ?>
-                    <p class="info-message">No employees found in the system.</p>
+                    <p class="info-message">Tidak ada karyawan ditemukan dalam sistem.</p>
                 <?php else: ?>
                     <div class="table-responsive">
                         <table id="employeeTable">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Department</th>
+                                    <th>Nama</th>
+                                    <th>Departemen</th>
                                     <th>Status</th>
-                                    <th>Created Date</th>
-                                    <th>Actions</th>
+                                    <th>Tanggal Dibuat</th>
+                                    <th>Tindakan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,15 +113,15 @@ unset($_SESSION['error_message']);
                                     <td><?php echo $emp['id']; ?></td>
                                     <td><?php echo htmlspecialchars($emp['name']); ?></td>
                                     <td><?php echo htmlspecialchars($emp['department']); ?></td>
-                                    <td><?php echo $emp['is_active'] ? '<span class="status-active">Active</span>' : '<span class="status-inactive">Inactive</span>'; ?></td>
-                                    <td><?php echo date('M d, Y', strtotime($emp['created_at'])); ?></td>
+                                    <td><?php echo $emp['is_active'] ? '<span class="status-active">Aktif</span>' : '<span class="status-inactive">Tidak Aktif</span>'; ?></td>
+                                    <td><?php echo date('d M Y', strtotime($emp['created_at'])); ?></td>
                                     <td>
                                         <div class="action-buttons">
                                             <a href="employee-edit.php?id=<?php echo $emp['id']; ?>" class="button button-small">Edit</a>
                                             <a href="employee-toggle-status.php?id=<?php echo $emp['id']; ?>&status=<?php echo $emp['is_active'] ? '0' : '1'; ?>" 
                                                class="button button-small button-secondary" 
-                                               onclick="return confirm('<?php echo $emp['is_active'] ? 'Deactivate' : 'Activate'; ?> this employee?')">
-                                                <?php echo $emp['is_active'] ? 'Deactivate' : 'Activate'; ?>
+                                               onclick="return confirm('<?php echo $emp['is_active'] ? 'Nonaktifkan' : 'Aktifkan'; ?> karyawan ini?')">
+                                                <?php echo $emp['is_active'] ? 'Nonaktifkan' : 'Aktifkan'; ?>
                                             </a>
                                         </div>
                                     </td>
@@ -134,7 +134,7 @@ unset($_SESSION['error_message']);
             </main>
             
             <footer>
-                <p>&copy; <?php echo date('Y'); ?> Front Office System | Educational Project</p>
+                <p>&copy; <?php echo date('Y'); ?> Sistem Front Office | Versi 1.0</p>
             </footer>
         </div>
     </div>

@@ -1,8 +1,8 @@
 <?php
 /**
- * Front Office System - Add Employee
+ * Front Office System - Tambah Karyawan
  * 
- * Form to add a new employee
+ * Formulir untuk menambahkan karyawan baru
  */
 
 // Start the session
@@ -18,11 +18,11 @@ unset($_SESSION['form_data']);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Employee - Front Office System</title>
+    <title>Tambah Karyawan - Sistem Front Office</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -34,26 +34,26 @@ unset($_SESSION['form_data']);
     
     <div class="sidebar">
         <div class="sidebar-header">
-            <h1>Front Office System</h1>
+            <h1>Sistem Front Office</h1>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="../index.php">Home</a></li>
+            <li><a href="../index.php"><i class="fas fa-home"></i> Beranda</a></li>
             
-            <li class="menu-category">Visitor Management <i class="fas fa-chevron-down"></i></li>
+            <li class="menu-category">Manajemen Pengunjung <i class="fas fa-chevron-down"></i></li>
             <ul class="submenu">
-                <li><a href="visitor-registration.php">Visitor Registration</a></li>
-                <li><a href="visitor-records.php">Visitor Records</a></li>
+                <li><a href="visitor-registration.php"><i class="fas fa-user-plus"></i> Pendaftaran Pengunjung</a></li>
+                <li><a href="visitor-records.php"><i class="fas fa-clipboard-list"></i> Catatan Pengunjung</a></li>
             </ul>
             
-            <li class="menu-category expanded">Administration <i class="fas fa-chevron-down"></i></li>
+            <li class="menu-category expanded">Administrasi <i class="fas fa-chevron-down"></i></li>
             <ul class="submenu expanded">
-                <li><a href="employee-management.php">Employee Management</a></li>
+                <li><a href="employee-management.php"><i class="fas fa-users"></i> Manajemen Karyawan</a></li>
             </ul>
             
-            <li class="menu-category">Future Modules <i class="fas fa-chevron-down"></i></li>
+            <li class="menu-category">Modul Mendatang <i class="fas fa-chevron-down"></i></li>
             <ul class="submenu">
-                <li><a href="#" class="disabled">Item Entry/Exit</a></li>
-                <li><a href="#" class="disabled">Guest Book</a></li>
+                <li><a href="#" class="disabled"><i class="fas fa-box"></i> Masuk/Keluar Barang</a></li>
+                <li><a href="#" class="disabled"><i class="fas fa-book"></i> Buku Tamu</a></li>
             </ul>
         </ul>
     </div>
@@ -61,7 +61,7 @@ unset($_SESSION['form_data']);
     <div class="main-container">
         <div class="container">
             <main>
-                <h2>Add New Employee</h2>
+                <h2>Tambah Karyawan Baru</h2>
                 
                 <!-- Display form errors if any -->
                 <?php if (!empty($formErrors)): ?>
@@ -78,32 +78,32 @@ unset($_SESSION['form_data']);
                     <input type="hidden" name="action" value="add">
                     
                     <div class="form-group">
-                        <label for="name">Full Name: <span class="required">*</span></label>
+                        <label for="name">Nama Lengkap: <span class="required">*</span></label>
                         <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($formData['name'] ?? ''); ?>" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="department">Department: <span class="required">*</span></label>
+                        <label for="department">Departemen: <span class="required">*</span></label>
                         <input type="text" id="department" name="department" value="<?php echo htmlspecialchars($formData['department'] ?? ''); ?>" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="is_active">Status:</label>
                         <select id="is_active" name="is_active">
-                            <option value="1" <?php echo (isset($formData['is_active']) && $formData['is_active'] == 1) ? 'selected' : ''; ?>>Active</option>
-                            <option value="0" <?php echo (isset($formData['is_active']) && $formData['is_active'] == 0) ? 'selected' : ''; ?>>Inactive</option>
+                            <option value="1" <?php echo (isset($formData['is_active']) && $formData['is_active'] == 1) ? 'selected' : ''; ?>>Aktif</option>
+                            <option value="0" <?php echo (isset($formData['is_active']) && $formData['is_active'] == 0) ? 'selected' : ''; ?>>Tidak Aktif</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <button type="submit" class="button">Add Employee</button>
-                        <a href="employee-management.php" class="button button-secondary">Cancel</a>
+                        <button type="submit" class="button">Tambah Karyawan</button>
+                        <a href="employee-management.php" class="button button-secondary">Batal</a>
                     </div>
                 </form>
             </main>
             
             <footer>
-                <p>&copy; <?php echo date('Y'); ?> Front Office System | Educational Project</p>
+                <p>&copy; <?php echo date('Y'); ?> Sistem Front Office | Versi 1.0</p>
             </footer>
         </div>
     </div>
