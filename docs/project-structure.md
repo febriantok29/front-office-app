@@ -1,103 +1,143 @@
-# Struktur Proyek Front Office App
+# Project Structure
 
-Dokumen ini menjelaskan struktur folder dan file dalam proyek Front Office App untuk memudahkan pengembangan dan pemeliharaan.
+This document explains the organization of the Front Office application, following modern PHP practices and a modular structure for better maintainability and development.
 
-## Struktur Folder
+## Directory Structure
 
 ```
-index.php                 # Entry point utama aplikasi
-app/                      # Inti aplikasi
-  ├── controllers/        # Controller untuk logika bisnis
-  └── models/             # Model data aplikasi
-      ├── Employee.php    # Model untuk data karyawan
-      └── Visitor.php     # Model untuk data pengunjung
-css/                      # Aset CSS
-  ├── styles.css          # File CSS utama
-  └── modules/            # Modul CSS dengan pendekatan modular
-      ├── 01-base.css     # CSS dasar (reset, variabel, dll)
-      ├── 02-layout.css   # Layout umum
-      ├── 03-forms.css    # Styling form
-      ├── 04-components.css # Komponen UI
-      ├── 05-dashboard.css # Styling khusus dashboard
-      └── 06-utilities.css # Kelas utilitas
-db/                       # Database
-  └── setup.sql           # Skema database dan data awal
-docs/                     # Dokumentasi
-  ├── introduction.md     # Pengenalan proyek
-  └── README.md           # Dokumentasi umum
-includes/                 # File pendukung yang di-include
-  └── Database.php        # Kelas koneksi dan operasi database
-js/                       # JavaScript
-  ├── employees.js        # Logika frontend untuk manajemen karyawan
-  ├── script.js           # Script umum
-  ├── validation.js       # Validasi form
-  └── visitors.js         # Logika frontend untuk manajemen pengunjung
-php/                      # File PHP untuk halaman berbeda
-  ├── employee-add.php    # Halaman tambah karyawan
-  ├── employee-edit.php   # Halaman edit karyawan
-  ├── employee-management.php # Manajemen karyawan
-  ├── employee-toggle-status.php # Toggle status aktif karyawan
-  ├── error.php           # Halaman error
-  ├── process_visitor.php # Pemrosesan data pengunjung
-  ├── process-employee.php # Pemrosesan data karyawan
-  ├── visitor_list.php    # Daftar pengunjung
-  ├── visitor-records.php # Catatan pengunjung
-  └── visitor-registration.php # Pendaftaran pengunjung
+front-office-app/
+├── app/                    # Core application folder
+│   ├── config/             # Configuration files
+│   │   ├── config.php      # General app configuration
+│   │   └── database.php    # Database configuration
+│   ├── controllers/        # Controller classes
+│   ├── core/               # Core framework classes
+│   │   ├── bootstrap.php   # Application bootstrap
+│   │   ├── Controller.php  # Base controller
+│   │   ├── Database.php    # Database connection
+│   │   ├── Model.php       # Base model
+│   │   ├── Router.php      # URL routing
+│   │   └── View.php        # View rendering
+│   ├── models/             # Model classes
+│   └── views/              # View templates
+│       ├── dashboard/      # Dashboard views
+│       ├── employees/      # Employee management views
+│       ├── errors/         # Error pages
+│       ├── layouts/        # Layout templates
+│       ├── partials/       # Reusable view components
+│       └── visitors/       # Visitor management views
+├── docs/                   # Documentation
+├── public/                 # Public web root
+│   ├── assets/             # Public assets
+│   │   ├── css/            # CSS files
+│   │   │   └── modules/    # Modular CSS files
+│   │   ├── img/            # Images
+│   │   └── js/             # JavaScript files
+│   └── index.php           # Front controller entry point
+└── db/                     # Database scripts
+    └── setup.sql           # Database setup script
 ```
 
-## Penjelasan Komponen Utama
+## Architectural Pattern
 
-### 1. Direktori `app/`
+The application follows an MVC (Model-View-Controller) architectural pattern:
 
-Direktori ini berisi kode inti aplikasi yang mengikuti pola Model-View-Controller (MVC).
+### Models (app/models/)
 
-#### Models
+Models handle data access and business logic. They are responsible for:
+- Database queries
+- Data validation
+- Business rules
 
-Model bertanggung jawab untuk logika data:
-- `Employee.php`: Model untuk data karyawan (CRUD operations)
-- `Visitor.php`: Model untuk data pengunjung (CRUD operations)
+### Views (app/views/)
 
-#### Controllers
+Views are responsible for generating the UI. The structure includes:
+- Layout templates: Define the page structure
+- Partials: Reusable UI components
+- View templates: Specific page content
 
-Controller menghubungkan model dengan view dan menangani logika bisnis.
+### Controllers (app/controllers/)
 
-### 2. File `includes/Database.php`
+Controllers handle the application flow and coordinate between models and views:
+- Process input from the user
+- Interact with models to fetch or manipulate data
+- Select the appropriate view to render
 
-Berisi kelas untuk koneksi database dan fungsi-fungsi umum terkait database. File ini menyediakan abstraksi untuk operasi database.
+## Core Components
 
-### 3. Direktori `php/` 
+### Router (app/core/Router.php)
 
-Berisi file PHP yang umumnya berperan sebagai view atau halaman aplikasi yang diakses langsung oleh pengguna.
+The router is responsible for URL handling:
+- Maps URLs to controller actions
+- Extracts parameters from URLs
+- Dispatches requests to the appropriate controller
 
-### 4. File CSS dan JavaScript
+### Database (app/core/Database.php)
 
-- CSS dibagi menjadi beberapa modul untuk memisahkan perhatian
-- JavaScript juga dipisahkan berdasarkan fungsinya
+The database component provides a clean interface for database operations:
+- PDO-based database connection using Singleton pattern
+- Query execution with prepared statements
+- Result fetching methods
 
-### 5. File `db/setup.sql`
+### Controller Base Class (app/core/Controller.php)
 
-Berisi definisi skema database SQL dan mungkin juga data awal untuk aplikasi.
+The base Controller class provides common functionality for all controllers:
+- View rendering
+- Model loading
+- Redirection
+- Response handling
 
-## Best Practices untuk Pengembangan
+### Model Base Class (app/core/Model.php)
 
-Saat mengembangkan proyek ini, silakan ikuti praktik terbaik berikut:
+The base Model class provides common database operations:
+- Basic CRUD operations (Create, Read, Update, Delete)
+- Common query methods
 
-1. **Konsistensi Penamaan**
-   - Gunakan konvensi camelCase untuk nama fungsi dan variabel di PHP dan JavaScript
-   - Gunakan kebab-case untuk nama file dan direktori
-   - Gunakan nama yang deskriptif
+### View Engine (app/core/View.php)
 
-2. **Organisasi Kode**
-   - Pisahkan logika bisnis dari presentasi (MVC)
-   - Gunakan file terpisah untuk kode yang berbeda fungsionalitasnya
-   - Pertahankan struktur folder yang ada
+The View class handles template rendering:
+- Layout selection
+- Data passing to templates
+- Partial inclusion
 
-3. **CSS**
-   - Gunakan pendekatan modular dengan memisahkan CSS sesuai fungsinya
-   - Ikuti urutan numerik pada file CSS untuk pemuatan yang benar
+## Front Controller
 
-4. **JavaScript**
-   - Pemisahan kode berdasarkan fitur/halaman
-   - Validasi input di sisi klien untuk UX yang lebih baik
+The application uses a front controller pattern (`public/index.php`) which:
+- Bootstraps the application
+- Initializes the router
+- Defines routes
+- Dispatches requests to the appropriate controller
 
-Untuk informasi lebih lanjut tentang cara mengembangkan aplikasi, silakan lihat [Panduan Pengembangan](./development-guide.md).
+## CSS Organization
+
+CSS is organized in a modular way:
+- Main stylesheet that imports all modules
+- Separate module files for different concerns:
+  - Base styles
+  - Layout
+  - Forms
+  - UI Components
+  - Dashboard-specific styles
+  - Utility classes
+
+## JavaScript Organization
+
+JavaScript is organized to:
+- Provide common functionality in a central script
+- Use specific scripts for particular features when needed
+- Follow a module-based approach
+
+## Configuration
+
+Configuration is separated from code:
+- Database settings in `app/config/database.php`
+- Application settings in `app/config/config.php`
+- Environment-specific settings can be added
+
+## Benefits of This Structure
+
+1. **Separation of Concerns**: Clear division between data access, business logic, and presentation
+2. **Maintainability**: Easier to maintain and extend the codebase
+3. **Reusability**: Components and code can be reused across the application
+4. **Testability**: Easier to test individual components
+5. **Scalability**: Code organization that scales well as the application grows

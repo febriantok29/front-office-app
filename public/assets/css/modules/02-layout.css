@@ -1,0 +1,157 @@
+/**
+ * Layout Styles
+ * 
+ * Contains styles for the page layout, sidebar, and main content area
+ */
+
+/* Main container layout */
+.main-container {
+  margin-left: 240px;
+  min-height: 100vh;
+  transition: margin-left 0.3s;
+}
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  width: 240px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: #2c3e50;
+  color: #fff;
+  overflow-y: auto;
+  transition: left 0.3s;
+  z-index: 1000;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.sidebar-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-menu a {
+  display: block;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.sidebar-menu a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.sidebar-menu a.active {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.sidebar-menu i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+.menu-category {
+  padding: 15px 20px 10px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.menu-category i {
+  float: right;
+  margin-top: 2px;
+  transition: transform 0.3s;
+}
+
+.menu-category.expanded i {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.submenu.expanded {
+  display: block;
+}
+
+.submenu a {
+  padding-left: 50px;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1001;
+  display: none;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .sidebar {
+    left: -240px;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .main-container {
+    margin-left: 0;
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+}
+
+/* Footer */
+footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 0.8rem;
+  border-top: 1px solid #eee;
+}

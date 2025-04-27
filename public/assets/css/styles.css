@@ -1,0 +1,23 @@
+/**
+ * Main Stylesheet
+ * 
+ * This file imports all modular CSS files
+ */
+
+/* Base styles */
+@import "modules/01-base.css";
+
+/* Layout styles */
+@import "modules/02-layout.css";
+
+/* Form styles */
+@import "modules/03-forms.css";
+
+/* Components styles */
+@import "modules/04-components.css";
+
+/* Dashboard styles */
+@import "modules/05-dashboard.css";
+
+/* Utility styles */
+@import "modules/06-utilities.css";
