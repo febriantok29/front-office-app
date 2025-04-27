@@ -1,0 +1,21 @@
+/* 
+ * Front Office System Styles - Main Import File
+ * 
+ * This is the main CSS file that imports all modular CSS components
+ * For better organization and maintainability, styles are split into modules:
+ * 
+ * 1. Base - Variables, reset, and base typography
+ * 2. Layout - Page structure and layouts
+ * 3. Forms - Form elements and controls
+ * 4. Components - Reusable UI components
+ * 5. Dashboard - Dashboard-specific elements
+ * 6. Utilities - Helper classes and responsive styles
+ */
+
+/* Import all modules in proper cascade order */
+@import "modules/01-base.css";
+@import "modules/02-layout.css";
+@import "modules/03-forms.css";
+@import "modules/04-components.css";
+@import "modules/05-dashboard.css";
+@import "modules/06-utilities.css";

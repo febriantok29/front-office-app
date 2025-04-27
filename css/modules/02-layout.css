@@ -1,0 +1,206 @@
+/* 
+ * Layout Module
+ * Contains styles for layout structure, sidebar, and main content area
+ */
+
+/* Main Layout Container */
+.main-container {
+  flex: 1;
+  margin-left: 280px;
+  transition: var(--transition);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--light);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding-bottom: 2rem;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+  width: 280px;
+  background: var(--secondary);
+  color: var(--text-light);
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  transition: var(--transition);
+  z-index: 1000;
+  box-shadow: var(--shadow-md);
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  background-color: var(--secondary-dark);
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-light);
+  letter-spacing: 0.5px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 1rem 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 0.25rem;
+  position: relative;
+}
+
+.sidebar-menu a {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  color: var(--gray-300);
+  text-decoration: none;
+  transition: var(--transition);
+  border-left: 3px solid transparent;
+  font-weight: 500;
+}
+
+.sidebar-menu a i {
+  margin-right: 0.75rem;
+  font-size: 1.1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--primary);
+}
+
+.sidebar-menu a.active {
+  background-color: rgba(67, 97, 238, 0.2);
+  font-weight: 600;
+}
+
+.sidebar-menu a.disabled {
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+}
+
+/* Sidebar Categories and Submenus */
+.menu-category {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 1rem;
+}
+
+.menu-category i {
+  transition: var(--transition);
+  font-size: 0.75rem;
+}
+
+.menu-category.expanded i {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  list-style: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.submenu.expanded {
+  max-height: 500px;
+}
+
+.submenu li a {
+  padding-left: 3rem;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.submenu li a::before {
+  content: "";
+  position: absolute;
+  left: 1.875rem;
+  top: 50%;
+  width: 0.5rem;
+  height: 1px;
+  background-color: var(--gray-400);
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  position: fixed;
+  left: 280px;
+  top: 1.5rem;
+  background-color: white;
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  color: var(--primary);
+}
+
+.sidebar-toggle:hover {
+  background-color: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+/* Sidebar Collapsed State */
+body.sidebar-collapsed .sidebar {
+  transform: translateX(-100%);
+}
+
+body.sidebar-collapsed .main-container {
+  margin-left: 0;
+}
+
+body.sidebar-collapsed .sidebar-toggle {
+  left: 1.5rem;
+}
+
+/* Footer */
+footer {
+  padding: 1.5rem 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--gray-200);
+  margin-top: auto;
+}
