@@ -308,3 +308,53 @@ tbody tr:hover {
   border-color: var(--primary);
   font-weight: 600;
 }
+
+/* Advanced Search and Filters */
+.filter-options {
+  margin-top: 1rem;
+  background-color: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-group label {
+  font-size: 0.85rem;
+  margin-bottom: 0.375rem;
+}
+
+.filter-group input[type="date"] {
+  width: 100%;
+  padding: 0.625rem;
+}
+
+@media (max-width: 768px) {
+  .filter-row {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+}
+
+/* Empty table message */
+.empty-table-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  font-style: italic;
+  background-color: var(--gray-50);
+}

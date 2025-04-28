@@ -11,9 +11,18 @@ session_start();
 // Include the Visitor model
 require_once __DIR__ . '/../app/models/Visitor.php';
 
-// Get all visitors
+// Get filter parameters
+$dateFrom = $_GET['dateFrom'] ?? '';
+$dateTo = $_GET['dateTo'] ?? '';
+$searchTerm = $_GET['searchTerm'] ?? '';
+$filterPurpose = $_GET['filterPurpose'] ?? '';
+
+// Get all visitors with optional filtering
 $visitor = new Visitor();
-$visitors = $visitor->getAll();
+$visitors = $visitor->getAll($dateFrom, $dateTo, $searchTerm, $filterPurpose);
+
+// Get distinct visit purposes for dropdown
+$visitPurposes = $visitor->getDistinctPurposes();
 ?>
 
 <!DOCTYPE html>
@@ -62,38 +71,69 @@ $visitors = $visitor->getAll();
             <main>
                 <h2>Catatan Pengunjung</h2>
                 
-                <?php if (empty($visitors)): ?>
-                    <p class="info-message">Tidak ada catatan pengunjung ditemukan.</p>
-                <?php else: ?>
-                    <div class="search-filter">
-                        <input type="text" id="visitorSearch" placeholder="Cari pengunjung..." class="search-input">
-                        <!-- Future expansion: Add date range filters and more advanced search options -->
-                        <!-- 
-                        <div class="filter-options">
-                            <label for="dateFrom">Dari:</label>
-                            <input type="date" id="dateFrom">
-                            <label for="dateTo">Sampai:</label>
-                            <input type="date" id="dateTo">
-                            <button class="button button-small">Filter</button>
-                        </div>
-                        -->
-                    </div>
+                <div class="search-filter">
+                    <input type="text" id="visitorSearch" placeholder="Cari pengunjung..." class="search-input">
                     
-                    <div class="table-responsive">
-                        <table id="visitorTable">
-                            <thead>
+                    <div class="filter-options">
+                        <form id="filterForm" method="GET" action="visitor-records.php">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label for="dateFrom">Dari:</label>
+                                    <input type="date" id="dateFrom" name="dateFrom" value="<?php echo htmlspecialchars($dateFrom); ?>">
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label for="dateTo">Sampai:</label>
+                                    <input type="date" id="dateTo" name="dateTo" value="<?php echo htmlspecialchars($dateTo); ?>">
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label for="filterPurpose">Tujuan Kunjungan:</label>
+                                    <select id="filterPurpose" name="filterPurpose">
+                                        <option value="">Semua Tujuan</option>
+                                        <?php foreach($visitPurposes as $purpose): ?>
+                                            <option value="<?php echo htmlspecialchars($purpose); ?>" 
+                                                <?php echo $filterPurpose === $purpose ? 'selected' : ''; ?>>
+                                                <?php echo htmlspecialchars($purpose); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <input type="hidden" name="searchTerm" id="searchTermField" value="<?php echo htmlspecialchars($searchTerm); ?>">
+                                    <button type="submit" class="button button-small">Terapkan Filter</button>
+                                    <a href="visitor-records.php" class="button button-small button-secondary">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <?php if (empty($visitors) && ($dateFrom || $dateTo || $searchTerm || $filterPurpose)): ?>
+                    <p class="info-message">Tidak ada catatan pengunjung ditemukan dengan kriteria pencarian yang dipilih. Silakan ubah filter atau reset.</p>
+                <?php endif; ?>
+                
+                <div class="table-responsive">
+                    <table id="visitorTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama Lengkap</th>
+                                <th>Nomor Kartu Identitas</th>
+                                <th>Nomor Telepon</th>
+                                <th>Email</th>
+                                <th>Karyawan yang Dikunjungi</th>
+                                <th>Tujuan</th>
+                                <th>Waktu Kunjungan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($visitors)): ?>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nama Lengkap</th>
-                                    <th>Nomor Kartu Identitas</th>
-                                    <th>Nomor Telepon</th>
-                                    <th>Email</th>
-                                    <th>Karyawan yang Dikunjungi</th>
-                                    <th>Tujuan</th>
-                                    <th>Waktu Kunjungan</th>
+                                    <td colspan="8" class="empty-table-message">Tidak ada data untuk ditampilkan</td>
                                 </tr>
-                            </thead>
-                            <tbody>
+                            <?php else: ?>
                                 <?php foreach ($visitors as $visitor): ?>
                                 <tr>
                                     <td><?php echo $visitor['id']; ?></td>
@@ -106,19 +146,19 @@ $visitors = $visitor->getAll();
                                     <td><?php echo date('d M Y H:i', strtotime($visitor['visit_timestamp'])); ?></td>
                                 </tr>
                                 <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- Future expansion: Add pagination controls here -->
-                    <!--
-                    <div class="pagination">
-                        <button class="pagination-btn">Sebelumnya</button>
-                        <span class="pagination-info">Halaman 1 dari 5</span>
-                        <button class="pagination-btn">Berikutnya</button>
-                    </div>
-                    -->
-                <?php endif; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Future expansion: Add pagination controls here -->
+                <!--
+                <div class="pagination">
+                    <button class="pagination-btn">Sebelumnya</button>
+                    <span class="pagination-info">Halaman 1 dari 5</span>
+                    <button class="pagination-btn">Berikutnya</button>
+                </div>
+                -->
                 
                 <div class="actions">
                     <a href="visitor-registration.php" class="button">Daftarkan Pengunjung Baru</a>

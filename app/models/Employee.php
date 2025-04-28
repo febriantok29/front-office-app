@@ -21,6 +21,17 @@ class Employee extends Model {
     }
     
     /**
+     * Get employee by ID
+     * 
+     * @param int $id
+     * @return array|null
+     */
+    public function getById($id) {
+        return $this->db->fetchOne("SELECT * FROM {$this->table} 
+                                   WHERE id = ?", [$id]);
+    }
+    
+    /**
      * Get all active employees
      * 
      * @return array

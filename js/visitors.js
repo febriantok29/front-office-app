@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Get references to elements
     const searchInput = document.getElementById('visitorSearch');
     const visitorTable = document.getElementById('visitorTable');
+    const filterForm = document.getElementById('filterForm');
+    const searchTermField = document.getElementById('searchTermField');
 
     // Skip if elements don't exist on the current page
     if (!searchInput || !visitorTable) return;
@@ -16,11 +18,33 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add event listener for search input
     searchInput.addEventListener('input', function () {
         const searchTerm = this.value.toLowerCase().trim();
+
+        // For client-side filtering without refreshing
         filterVisitorTable(searchTerm);
+
+        // Update the hidden field for server-side filtering
+        if (searchTermField) {
+            searchTermField.value = searchTerm;
+        }
     });
 
+    // Add event listener for search input to trigger search on enter key
+    searchInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter' && filterForm) {
+            e.preventDefault();
+            filterForm.submit();
+        }
+    });
+
+    // Initialize search input from URL parameter if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchTermParam = urlParams.get('searchTerm');
+    if (searchTermParam && searchInput) {
+        searchInput.value = searchTermParam;
+    }
+
     /**
-     * Filter the visitor table based on search term
+     * Filter the visitor table based on search term (client-side filtering)
      * 
      * @param {string} searchTerm - The term to search for
      */
