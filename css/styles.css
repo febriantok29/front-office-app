@@ -13,9 +13,9 @@
  */
 
 /* Import all modules in proper cascade order */
-@import "modules/01-base.css";
-@import "modules/02-layout.css";
-@import "modules/03-forms.css";
-@import "modules/04-components.css";
-@import "modules/05-dashboard.css";
-@import "modules/06-utilities.css";
+@import "modules/base.css";
+@import "modules/layout.css";
+@import "modules/forms.css";
+@import "modules/components.css";
+@import "modules/dashboard.css";
+@import "modules/utilities.css";

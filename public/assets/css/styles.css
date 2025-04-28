@@ -5,19 +5,19 @@
  */
 
 /* Base styles */
-@import "modules/01-base.css";
+@import "modules/base.css";
 
 /* Layout styles */
-@import "modules/02-layout.css";
+@import "modules/layout.css";
 
 /* Form styles */
-@import "modules/03-forms.css";
+@import "modules/forms.css";
 
 /* Components styles */
-@import "modules/04-components.css";
+@import "modules/components.css";
 
 /* Dashboard styles */
-@import "modules/05-dashboard.css";
+@import "modules/dashboard.css";
 
 /* Utility styles */
-@import "modules/06-utilities.css";
+@import "modules/utilities.css";

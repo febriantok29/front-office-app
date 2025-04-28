@@ -21,7 +21,7 @@ A comprehensive front office management system for managing visitors, employees,
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/front-office-app.git
+   git clone https://github.com/febriantok29/front-office-app.git
    ```
 
 2. Set up the database:

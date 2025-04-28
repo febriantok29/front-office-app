@@ -32,6 +32,43 @@ unset($_SESSION['error_message']);
     <title>Manajemen Karyawan - Sistem Front Office</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom styles for active/nonactive buttons */
+        .button-activate {
+            background-color: var(--success);
+            color: white;
+            border: none;
+        }
+        .button-activate:hover {
+            background-color: #059669;
+        }
+        .button-deactivate {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+        }
+        .button-deactivate:hover {
+            background-color: #dc2626;
+        }
+        
+        /* Improved status indicators */
+        .status-active {
+            background-color: var(--success-light);
+            color: var(--success);
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status-inactive {
+            background-color: var(--danger-light);
+            color: var(--danger);
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->
@@ -119,7 +156,7 @@ unset($_SESSION['error_message']);
                                         <div class="action-buttons">
                                             <a href="employee-edit.php?id=<?php echo $emp['id']; ?>" class="button button-small">Edit</a>
                                             <a href="employee-toggle-status.php?id=<?php echo $emp['id']; ?>&status=<?php echo $emp['is_active'] ? '0' : '1'; ?>" 
-                                               class="button button-small button-secondary" 
+                                               class="button button-small <?php echo $emp['is_active'] ? 'button-deactivate' : 'button-activate'; ?>" 
                                                onclick="return confirm('<?php echo $emp['is_active'] ? 'Nonaktifkan' : 'Aktifkan'; ?> karyawan ini?')">
                                                 <?php echo $emp['is_active'] ? 'Nonaktifkan' : 'Aktifkan'; ?>
                                             </a>
