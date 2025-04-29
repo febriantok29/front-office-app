@@ -7,6 +7,12 @@ CREATE DATABASE IF NOT EXISTS front_office_db;
 -- Use the front office database
 USE front_office_db;
 
+-- Drop existing tables if they exist (in reverse order of dependencies)
+DROP TABLE IF EXISTS guest_book;
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS visitors;
+DROP TABLE IF EXISTS employees;
+
 -- Create employees table if it doesn't exist yet
 CREATE TABLE IF NOT EXISTS employees (
     id INT AUTO_INCREMENT PRIMARY KEY,
