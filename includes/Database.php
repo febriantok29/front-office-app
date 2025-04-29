@@ -6,6 +6,7 @@
  */
 class Database {
     private $host = 'localhost';
+    private $port = 3316;
     private $username = 'root';
     private $password = '';
     private $database = 'front_office_db';
@@ -17,7 +18,7 @@ class Database {
     public function __construct() {
         try {
             $this->conn = new PDO(
-                "mysql:host=$this->host;dbname=$this->database",
+                "mysql:host=$this->host;port=$this->port;dbname=$this->database",
                 $this->username,
                 $this->password
             );

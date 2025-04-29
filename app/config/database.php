@@ -5,6 +5,7 @@
 
 return [
     'host' => 'localhost',
+    'port' => 3306,
     'dbname' => 'front_office_db',
     'username' => 'root',
     'password' => '',
