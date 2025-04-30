@@ -4,6 +4,10 @@
  * 
  * All model classes will extend this class
  */
+
+// Include the Database class
+require_once __DIR__ . '/Database.php';
+
 class Model {
     protected $db;
     protected $table;
