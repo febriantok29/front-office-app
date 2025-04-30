@@ -5,17 +5,26 @@
  * This class handles the database connection and query execution
  */
 class Database {
-    private $host = 'localhost';
-    private $port = 3316;
-    private $username = 'root';
-    private $password = '';
-    private $database = 'front_office_db';
+    private $host;
+    private $port;
+    private $username;
+    private $password;
+    private $database;
     private $conn;
     
     /**
      * Constructor - establishes database connection
      */
     public function __construct() {
+        // Load database configuration from config file
+        $config = require_once __DIR__ . '/../app/config/database.php';
+        
+        $this->host = $config['host'];
+        $this->port = $config['port']; // Mengambil port dari konfigurasi
+        $this->username = $config['username'];
+        $this->password = $config['password'];
+        $this->database = $config['dbname'];
+        
         try {
             $this->conn = new PDO(
                 "mysql:host=$this->host;port=$this->port;dbname=$this->database",
@@ -23,9 +32,10 @@ class Database {
                 $this->password
             );
             
-            // Set the PDO error mode to exception
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            // Set PDO attributes from config
+            foreach ($config['options'] as $option => $value) {
+                $this->conn->setAttribute($option, $value);
+            }
             
         } catch(PDOException $e) {
             die("Connection failed: " . $e->getMessage());
