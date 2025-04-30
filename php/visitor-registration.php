@@ -10,7 +10,6 @@ session_start();
 
 // Include the Employee model to get employee list
 require_once __DIR__ . '/../app/models/Employee.php';
-require_once __DIR__ . '/../includes/Database.php';
 
 // Get all active employees for the dropdown
 $employee = new Employee();

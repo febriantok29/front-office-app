@@ -12,8 +12,8 @@ class Visitor {
      * Constructor - initializes the database connection
      */
     public function __construct() {
-        require_once __DIR__ . '/../../includes/Database.php';
-        $this->db = new Database();
+        require_once __DIR__ . '/../../app/core/Database.php';
+        $this->db = Database::getInstance();
     }
     
     /**

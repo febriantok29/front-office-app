@@ -7,7 +7,7 @@
 
 // Load the Model class if it doesn't exist yet
 if (!class_exists('Model')) {
-    require_once __DIR__ . '/../../includes/Model.php';
+    require_once __DIR__ . '/../core/Model.php';
 }
 
 class Employee extends Model {
