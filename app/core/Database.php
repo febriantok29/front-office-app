@@ -3,24 +3,39 @@
  * Database Class
  * 
  * Handles database connections and queries using PDO
+ * This is the unified version that combines functionality from both previous Database classes
  */
 class Database {
     private static $instance = null;
     private $conn;
+    private $host;
+    private $port;
+    private $username;
+    private $password;
+    private $database;
+    private $charset;
     
     /**
      * Private constructor to prevent direct object creation
      */
     private function __construct() {
-        $config = require CONFIG_PATH . '/database.php';
+        // Use direct file path instead of relying on CONFIG_PATH constant
+        $config = require dirname(__DIR__) . '/config/database.php';
+        
+        $this->host = $config['host'];
+        $this->port = $config['port'];
+        $this->username = $config['username'];
+        $this->password = $config['password'];
+        $this->database = $config['dbname'];
+        $this->charset = $config['charset'] ?? 'utf8mb4';
         
         try {
-            $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
+            $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->database};charset={$this->charset}";
             
             $this->conn = new PDO(
                 $dsn,
-                $config['username'],
-                $config['password'],
+                $this->username,
+                $this->password,
                 $config['options']
             );
             
