@@ -41,15 +41,62 @@ class Visitor {
     }
     
     /**
-     * Get all visitors from the database
+     * Get all visitors from the database with optional filtering
      * 
+     * @param string $dateFrom Optional start date filter
+     * @param string $dateTo Optional end date filter
+     * @param string $searchTerm Optional search term for name, ID card, phone
+     * @param string $purpose Optional visit purpose filter
      * @return array List of visitors
      */
-    public function getAll() {
-        return $this->db->fetchAll("SELECT v.*, e.name as employee_name 
-                                   FROM {$this->table} v
-                                   JOIN employees e ON v.employee_id = e.id
-                                   ORDER BY v.visit_timestamp DESC");
+    public function getAll($dateFrom = '', $dateTo = '', $searchTerm = '', $purpose = '') {
+        $sql = "SELECT v.*, e.name as employee_name 
+                FROM {$this->table} v
+                JOIN employees e ON v.employee_id = e.id
+                WHERE 1=1";
+        
+        $params = [];
+        
+        // Add date range filter if provided
+        if (!empty($dateFrom)) {
+            $sql .= " AND DATE(v.visit_timestamp) >= ?";
+            $params[] = $dateFrom;
+        }
+        
+        if (!empty($dateTo)) {
+            $sql .= " AND DATE(v.visit_timestamp) <= ?";
+            $params[] = $dateTo;
+        }
+        
+        // Add search term filter if provided
+        if (!empty($searchTerm)) {
+            $sql .= " AND (v.full_name LIKE ? OR v.id_card_number LIKE ? OR v.phone_number LIKE ? OR e.name LIKE ?)";
+            $searchPattern = "%{$searchTerm}%";
+            $params[] = $searchPattern;
+            $params[] = $searchPattern;
+            $params[] = $searchPattern;
+            $params[] = $searchPattern;
+        }
+        
+        // Add purpose filter if provided
+        if (!empty($purpose)) {
+            $sql .= " AND v.visit_purpose = ?";
+            $params[] = $purpose;
+        }
+        
+        $sql .= " ORDER BY v.visit_timestamp DESC";
+        
+        return $this->db->fetchAll($sql, $params);
+    }
+    
+    /**
+     * Get distinct visit purposes for filter dropdown
+     * 
+     * @return array List of unique visit purposes
+     */
+    public function getDistinctPurposes() {
+        $result = $this->db->fetchAll("SELECT DISTINCT visit_purpose FROM {$this->table} ORDER BY visit_purpose");
+        return array_column($result, 'visit_purpose');
     }
     
     /**
