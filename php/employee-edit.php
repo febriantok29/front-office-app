@@ -50,36 +50,8 @@ unset($_SESSION['form_data']);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <button class="sidebar-toggle">
-        <i class="fas fa-bars"></i>
-    </button>
-    
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h1>Sistem Front Office</h1>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="../index.php"><i class="fas fa-home"></i> Beranda</a></li>
-            
-            <li class="menu-category">Manajemen Pengunjung <i class="fas fa-chevron-down"></i></li>
-            <ul class="submenu">
-                <li><a href="visitor-registration.php"><i class="fas fa-user-plus"></i> Pendaftaran Pengunjung</a></li>
-                <li><a href="visitor-records.php"><i class="fas fa-clipboard-list"></i> Catatan Pengunjung</a></li>
-            </ul>
-            
-            <li class="menu-category expanded">Administrasi <i class="fas fa-chevron-down"></i></li>
-            <ul class="submenu expanded">
-                <li><a href="employee-management.php" class="active"><i class="fas fa-users"></i> Manajemen Karyawan</a></li>
-            </ul>
-            
-            <li class="menu-category">Modul Mendatang <i class="fas fa-chevron-down"></i></li>
-            <ul class="submenu">
-                <li><a href="#" class="disabled"><i class="fas fa-box"></i> Masuk/Keluar Barang</a></li>
-                <li><a href="#" class="disabled"><i class="fas fa-book"></i> Buku Tamu</a></li>
-            </ul>
-        </ul>
-    </div>
+    <!-- Include the sidebar -->
+    <?php include 'includes/sidebar.php'; ?>
     
     <div class="main-container">
         <div class="container">
